@@ -1,4 +1,4 @@
-# Example 1-10 RUnning the Hello World
+# Example 1-9 and 1-10 RUnning the Hello World
 
 require! http
 
