@@ -12,3 +12,4 @@ do
 	console.log data
 
 .listen 9000
+console.log 'Chat server started'
