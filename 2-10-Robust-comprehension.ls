@@ -7,32 +7,32 @@
 
 require! net
 
-@clientList = []
 chatServer = net.createServer!
+clientList = []
 
 do
 	client <~ chatServer.on \connection
 	client.name = client.remoteAddress + \: + client.remotePort
 	client.write "Hi!\n" + client.name + "!\n"
-	@clientList.push client
+	clientList.push client
 
 	client.on \data (data) !->
 		broadcast data, client
 
 	client.on \end !~>
-		@clientList = [i for i in @clientList when i isnt client]
+		clientList := [i for i in clientList when i isnt client]
 
 	client.on \error (e) !->
 		console.log e
 
-broadcast = (msg, client) !~>
+broadcast = (msg, client) !->
 	cleanup = []
-	for i in @clientList when i isnt client
+	for i in clientList when i isnt client
 		if i.writable
 			i.write client.name + " says " + msg
 		else
 			cleanup.push i
 			i.destroy!
-	@clientList = [i for i in @clientList when i not in cleanup]
+	clientList := [i for i in clientList when i not in cleanup]
 
 chatServer.listen 9000
