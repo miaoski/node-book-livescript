@@ -11,7 +11,7 @@ chatServer = net.createServer!
 clientList = []
 
 do
-	client <~ chatServer.on \connection
+	client <- chatServer.on \connection
 	client.name = client.remoteAddress + \: + client.remotePort
 	client.write "Hi!\n" + client.name + "!\n"
 	clientList.push client
