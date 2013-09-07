@@ -4,6 +4,7 @@
 
 # Use list comprehension instead of list.splice().
 # However, this doesn't seem to be any prettier, because ~> and @ confuse the readers.
+# Thank Sorella #livescript helped me to get rid of ~> and @
 
 require! net
 
@@ -19,7 +20,7 @@ do
 	client.on \data (data) !->
 		broadcast data, client
 
-	client.on \end !~>
+	client.on \end !->
 		clientList := [i for i in clientList when i isnt client]
 
 	client.on \error (e) !->
