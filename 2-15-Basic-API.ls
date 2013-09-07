@@ -1,4 +1,5 @@
 # Example 2-15 Adding a basic API
+# Before running the example, do "npm install express"
 
 require! express
 
