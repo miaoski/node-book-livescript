@@ -1,4 +1,4 @@
-# 7-22 Attaching Socket.IO to an Express application: server code
+# Example 7-22 Attaching Socket.IO to an Express application: server code
 # Migrated to Express 3.x
 
 require! {

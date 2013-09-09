@@ -1,4 +1,4 @@
-# 7-16 Creating a Socket.IO server
+# Example 7-16 Creating a Socket.IO server
 
 require! http
 require! io: 'socket.io'

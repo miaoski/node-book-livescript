@@ -1,4 +1,4 @@
-# 7-18 Simple socket.io server
+# Example 7-18 Simple socket.io server
 # Should be client.id, not client.sessionId
 
 require! {

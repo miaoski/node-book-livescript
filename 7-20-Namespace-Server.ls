@@ -1,4 +1,4 @@
-# 7-20 A namespace-enabled Socket.IO server
+# Example 7-20 A namespace-enabled Socket.IO server
 
 require! {
 	http

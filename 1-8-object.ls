@@ -1,4 +1,4 @@
-# 1-8 Setting and enumerating objects with REPL
+# Example 1-8 Setting and enumerating objects with REPL
 # You'll have to copy-and-paste the code into lsc REPL
 
 list = [\a \b \c]
