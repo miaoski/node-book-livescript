@@ -1,4 +1,5 @@
 # Example 7-16 Creating a Socket.IO server
+# Prerequisite: npm install socket.io
 
 require! http
 require! io: 'socket.io'
