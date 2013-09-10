@@ -32,8 +32,6 @@ app.configure !->
 		store: store
 	}
 	app.use (req, res) !->
-		console.log 'unsigned cookie = '
-		console.log req.signedCookies
 		sess = req.session
 		req.signedCookies['connect.sid'] = req.sessionID
 		console.log "SessionID in Express = " + req.sessionID
