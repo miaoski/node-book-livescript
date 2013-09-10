@@ -9,8 +9,9 @@
 #    Or, cookies won't be set.  Cf.  http://stackoverflow.com/questions/10359333/cant-get-express-session-id-from-cookies-w-socket-io
 #    I have spend 3 hours by this XSS-prevention.
 # 3. Don't use session.sid.  It doesn't work.
-#    It's OK to use the default name: connect.sid
+#    The default name is good: connect.sid
 # 4. Remember decodeURIComponent
+# 5. Workaround session.save(): this.id has no value
 
 require! {
 	http
@@ -21,20 +22,23 @@ require! {
 }
 
 app = express!
-store = new express.session.MemoryStore
+store = new express.session.MemoryStore!
 Session = connect.middleware.session.Session
 
 app.configure !->
-	app.use express.cookieParser!
+	app.use express.cookieParser 'sign'
 	app.use express.session {
 		secret: 'secretKey'
 		store: store
 	}
 	app.use (req, res) !->
+		console.log 'unsigned cookie = '
+		console.log req.signedCookies
 		sess = req.session
+		req.signedCookies['connect.sid'] = req.sessionID
 		console.log "SessionID in Express = " + req.sessionID
-		console.log "store = "
-		console.log store
+		# console.log "store = "
+		# console.log store
 		# console.log "sess.email = " + sess.email
 		res.render 'socket.jade', {email: sess.email || 'noSessMail'}
 
@@ -57,11 +61,13 @@ sio.configure !->
 				accept null, true
 	sio.sockets.on 'connection', (socket) !->
 		sess = socket.handshake.session
-		console.log "sid in Socket.IO = " + socket.handshake.sid
+		sid = socket.handshake.sid
+		console.log "sid in Socket.IO = " + sid
 		socket.join socket.handshake.sid
 		socket.on 'emailupdate', !->
 			sess.email = it.email
-			sess.save!
-			# console.log "write to sid = " + socket.handshake.sid
+			store.set sid, sess
+			# XXX: sess.save!
 			sio.sockets.in socket.handshake.sid
 				.emit 'emailchanged', { email: it.email }
+			# console.log socket.handshake.sessionStore
