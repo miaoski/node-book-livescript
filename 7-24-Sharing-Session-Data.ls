@@ -12,8 +12,7 @@
 #    The default name is good: connect.sid
 # 4. Remember decodeURIComponent
 # 5. Workaround session.save(): this.id has no value
-# 6. On Chrome v26, session is regenerated as page refreshes.
-#    The issues does not happen on Chrome v22, v29, and Firefox.
+# 6. Fixed the "cannot get sessionID from coockie" issue of Chrome v26.
 
 require! {
 	http
@@ -33,13 +32,14 @@ app.configure !->
 		secret: 'secretKey'
 		store: store
 	}
-	app.use (req, res) !->
+	app.use (req, res, next) !->
 		sess = req.session
 		console.log "SessionID in Express = " + req.sessionID
 		# console.log "store = "
 		# console.log store
 		# console.log "sess.email = " + sess.email
 		res.render 'socket.jade', {email: sess.email || 'noSessMail'}
+		next and next!		# works with Chrome 26
 
 server = http.createServer app
 server.listen 8080
