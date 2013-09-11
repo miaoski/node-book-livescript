@@ -13,7 +13,7 @@
 # 4. Remember decodeURIComponent
 # 5. Workaround session.save(): this.id has no value
 # 6. On Chrome v26, session is regenerated as page refreshes.
-#    The issues does not happen on Chrome v22 and Firefox.
+#    The issues does not happen on Chrome v22, v29, and Firefox.
 
 require! {
 	http
