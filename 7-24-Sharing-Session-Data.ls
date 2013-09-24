@@ -26,20 +26,19 @@ app = express!
 store = new express.session.MemoryStore!
 Session = connect.middleware.session.Session
 
-app.configure !->
-	app.use express.cookieParser 'sign'
-	app.use express.session {
-		secret: 'secretKey'
-		store: store
-	}
-	app.use (req, res, next) !->
-		sess = req.session
-		console.log "SessionID in Express = " + req.sessionID
-		# console.log "store = "
-		# console.log store
-		# console.log "sess.email = " + sess.email
-		res.render 'socket.jade', {email: sess.email || 'noSessMail'}
-		next and next!		# works with Chrome 26
+app.use express.cookieParser!
+app.use express.session {
+	secret: 'secretKey'
+	store: store
+}
+
+app.get '/', (req, res) !->
+	sess = req.session
+	console.log "SessionID in Express = " + req.sessionID
+	# console.log "store = "
+	# console.log store
+	# console.log "sess.email = " + sess.email
+	res.render 'socket.jade', {email: sess.email || 'noSessMail'}
 
 server = http.createServer app
 server.listen 8080
