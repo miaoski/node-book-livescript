@@ -27,7 +27,10 @@ console.log 'in   ------( note the tokeniser )-----'
 tfidf.tfidfs 'in', (i, measure) !->
 	console.log "document #i is #measure"
 
+console.log 'TF-IDF of "code" in document 2:', tfidf.tfidf 'code', 2
 console.log 'TF-IDF of "node" in document 2:', tfidf.tfidf 'node', 2
+console.log 'TF-IDF of "node" in document 3:', tfidf.tfidf 'node', 3
+console.log 'TF-IDF of "none" in document 3:', tfidf.tfidf 'none', 3
 
 console.log 'listTerms in document 4:'
 (tfidf.listTerms 4).forEach !->
